@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
-import AirQualityCard from './AirqualityCard';
+import AirQualityCard from './AirQualityCard';
 import './ScrollableCards.css';
 import { FaSun, FaMoon, FaCheck, FaTimes, FaLungs, FaHeartbeat, FaAllergies, FaVirus, FaWind } from 'react-icons/fa';
 import { GiLungs } from 'react-icons/gi';
