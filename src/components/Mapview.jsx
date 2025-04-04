@@ -638,26 +638,28 @@ function Mapview({ results, pieChartData, colors, weatherData, onCoordinatesSele
     <div className="map-container">
       {/* Search bar and analyze button */}
       <div className="map-controls">
-        <div className="search-bar">
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search for a location..."
-          />
-          <button className="search-button" onClick={handleSearch}>
-            <FaSearch />
-          </button>
+        <div className="search-container">
+          <div className="search-bar">
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search for a location..."
+            />
+            <button className="search-button" onClick={handleSearch}>
+              <FaSearch />
+            </button>
+          </div>
+          
+          {pinLocation && onCoordinatesSelected && (
+            <button 
+              className="analyze-button" 
+              onClick={handleAnalyze}
+            >
+              Analyze Area
+            </button>
+          )}
         </div>
-        
-        {pinLocation && onCoordinatesSelected && (
-          <button 
-            className="analyze-button" 
-            onClick={handleAnalyze}
-          >
-            Analyze Area
-          </button>
-        )}
       </div>
       
       <div 

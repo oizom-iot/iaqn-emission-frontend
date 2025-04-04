@@ -2,14 +2,16 @@
 
 .weather-card-map {
   position: absolute;
-  top: 10px;
-  left: 430px;
+  top: 7px;
+  left: 50%;
+  transform: translateX(-50%);
+  align-items: center;
   z-index: 1000;
   background: rgba(255, 255, 255, 0.35);
   backdrop-filter: blur(5px);
   border-radius: 12px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  padding: 12px 14px;  /* Reduced padding */
+  padding: 20px 16px;  /* Reduced padding */
   min-width: 100px;    /* Reduced width */
   overflow: hidden;
   transition: all 0.3s ease;
@@ -112,13 +114,4 @@
   color: rgba(0, 0, 0, 0.9);
 }
 
-.weather-card-map:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
-  background: rgba(255, 255, 255, 0.3);
-}
 
-.weather-stat:hover {
-  transform: translateY(-2px);
-  transition: transform 0.2s ease;
-}

@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
 import AirQualityCard from './AirqualityCard';
 import './ScrollableCards.css';
-import { FaSun, FaMoon, FaCheck, FaTimes, FaLungs, FaHeartbeat, FaAllergies, FaVirus, FaWind } from 'react-icons/fa';
+import { FaSun, FaMoon, FaCheck, FaTimes, FaLungs, FaHeartbeat, FaAllergies, FaVirus, FaWind, FaSearch, FaMapMarkerAlt } from 'react-icons/fa';
 import { GiLungs } from 'react-icons/gi';
 import { TbMoodSick } from 'react-icons/tb';
 
@@ -11,6 +11,7 @@ const ScrollableCards = ({ analysis, city, area, handleNewAnalysis }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [darkMode, setDarkMode] = useState(false); // Set light theme as default
   const [selectedCondition, setSelectedCondition] = useState(null); // Track selected health condition
+  const [searchQuery, setSearchQuery] = useState(''); // Add search query state
 
   useEffect(() => {
     const handleScroll = () => {
@@ -58,13 +59,31 @@ const ScrollableCards = ({ analysis, city, area, handleNewAnalysis }) => {
 
       {/* Search overlay */}
       <div className="search-overlay">
-        <button onClick={handleNewAnalysis} className="primary-button">
-          Analyze New Area
-        </button>
+        <div className="search-container">
+          <div className="search-bar">
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search for a location..."
+            />
+            <button className="search-button" onClick={() => {
+              // This would typically call a search function
+              // For now, we'll just log the search query
+              console.log('Searching for:', searchQuery);
+            }}>
+              <FaSearch />
+            </button>
+          </div>
+          <button onClick={handleNewAnalysis} className="analyze-button">
+            <FaMapMarkerAlt className="button-icon" />
+            Analyze New Area
+          </button>
+        </div>
       </div>
 
-      {/* First card with peek effect */}
-      <div className="card peek-card">
+      {/* First card with peek effect - simplified */}
+      <div className="peek-card">
         <div className="peek-indicator"></div>
         <div className="scroll-prompt">👇🏻 Hover HERE & Scroll to see full analysis </div>
         <div className="analysis-scroll">

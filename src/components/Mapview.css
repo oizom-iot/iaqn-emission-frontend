@@ -21,9 +21,23 @@
   top: 20px;
   left: 20px;
   z-index: 10;
+}
+
+/* Search container - holds search bar and analyze button */
+.search-container {
   display: flex;
-  align-items: center;
-  gap: 10px;
+  flex-direction: column;
+  gap: 5px; /* Adjusted gap for better spacing */
+  width: 300px;
+  background: rgba(255, 255, 255, 0);
+  border-radius: 12px;
+  padding: 12px 14px; /* Match padding with weather-card-map */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  overflow: hidden;
+  /* Ensure exact same height as weather card */
+  height: auto;
+  justify-content: space-between;
 }
 
 /* Search bar styling */
@@ -31,10 +45,11 @@
   display: flex;
   align-items: center;
   background: white;
-  border-radius: 4px;
+  border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  width: 300px;
+  width: 100%;
+  margin-bottom: 0; /* Remove bottom margin for better spacing */
 }
 
 .search-bar input {
@@ -62,19 +77,39 @@
 
 /* Analyze button styling */
 .analyze-button {
-  background: #2ecc71;
+  width: 100%;
+  background: linear-gradient(135deg, #007aff, #34c759);
   color: white;
   border: none;
-  border-radius: 4px;
-  padding: 10px 15px;
-  font-weight: 500;
+  border-radius: 8px;
+  padding: 10px 15px; /* Reduced padding for better vertical alignment */
+  font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  transition: background 0.3s ease;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 0; /* Remove any top margin */
 }
 
 .analyze-button:hover {
-  background: #27ae60;
+  background: linear-gradient(135deg, #0066cc, #27ae60);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 122, 255, 0.3);
+}
+
+.analyze-button:active {
+  transform: translateY(0);
+}
+
+.analyze-button:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 /* Pin marker styling */

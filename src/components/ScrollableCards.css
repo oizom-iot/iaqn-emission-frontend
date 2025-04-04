@@ -74,6 +74,10 @@
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.4), rgba(46, 47, 48, 0.4)); /* Increased transparency */
   border: none;
   backdrop-filter: blur(8px); /* Added blur effect */
+  width: 95%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .peek-card:hover {
@@ -149,7 +153,7 @@
   background: linear-gradient(to right, rgba(255, 255, 255, 0.95), rgba(240, 248, 255, 0.95));
 }
 
-@media (max-width: 768px) {
+@media (max-width: 700px) {
   .dual-card {
     flex-direction: column;
   }
@@ -163,11 +167,11 @@
 
 .weather-section,
 .air-quality-section {
-  margin-top: 16px;
+  margin: 20px auto;
+  width: 95%;
+  max-width: 1200px;
   border-top: 1px solid #eee;
-  padding-left: 90px;
   padding-top: 12px;
-  padding-right: 90px;
 }
 
 /* Visualization Card */
@@ -269,16 +273,16 @@
 .analysis-card {
   min-height: 400px;
   padding: 35px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(240, 248, 255, 0.95));
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.85), rgba(240, 248, 255, 0.85));
   border-radius: 20px;
-  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.08);
+  border: none;
   backdrop-filter: blur(10px);
   position: relative;
   overflow: hidden;
   transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
   transform: translateZ(0);
-  margin-top: 30px;
+  margin-top: 20px;
 }
 
 .analysis-card:hover {
@@ -515,47 +519,77 @@
   z-index: 1;
 }
 
-/* Search overlay */
+/* Search overlay - styled to match WeatherCard */
 .search-overlay {
   position: fixed;
-  top: 20px;
-  right: 60px;
+  top: 6px; /* Match top position with weather-card-map */
+  left: 20px;
   z-index: 20;
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.25); /* More transparent background */
+  backdrop-filter: blur(5px);
   border-radius: 12px;
-  padding: 15px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  padding: 1px 1px; /* Reduced padding to make it more compact */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
   width: 300px;
   pointer-events: auto;
-  border: 1px solid rgba(0, 122, 255, 0.2);
-}
-
-.search-input input {
-  width: 100%;
-  padding: 12px 15px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  font-size: 14px;
-  margin-bottom: 10px;
+  border: none; /* Removed border for cleaner look */
+  display: flex;
+  flex-direction: column;
   transition: all 0.3s ease;
+  overflow: hidden;
+  height: auto;
 }
 
-.search-input input:focus {
-  border-color: #007aff;
-  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.2);
-  outline: none;
-}
-
-.primary-button {
+/* Use the same search bar styling as in Mapview for consistency */
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
   width: 100%;
-  padding: 12px;
+  margin-bottom: 5px; /* Reduced gap between search bar and button */
+}
+
+.search-container {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  gap: 1px; /* Consistent small gap */
+}
+
+.search-bar input {
+  flex: 1;
+  padding: 10px 15px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+}
+
+.search-button {
+  background: #007aff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Use the same button styling as in Mapview for consistency */
+.analyze-button {
+  width: 100%;
   background: linear-gradient(135deg, #007aff, #34c759);
   color: white;
   border: none;
   border-radius: 8px;
+  padding: 12px 15px;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
