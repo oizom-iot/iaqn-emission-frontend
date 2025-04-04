@@ -18,7 +18,7 @@ function App() {
   
   // Colors for the pie chart
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#AF19FF', '#FF1919'];
-  const API_URL = process.env.REACT_APP_BACKEND_URL;
+  const API_URL = "https://airsightapi.iaqn.org";
 
   // Expose handleSearch globally so it can be called from Mapview
   window.handleSearch = async () => {
