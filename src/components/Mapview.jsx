@@ -6,6 +6,7 @@ import * as turf from '@turf/turf';
 
 // Add WeatherCard import at the top
 import WeatherCard from './WeatherCard';
+import LoadingOverlay from './LoadingOverlay';
 import { FaSearch, FaMapMarkerAlt } from 'react-icons/fa';
 
 function Mapview({ results, pieChartData, colors, weatherData, onCoordinatesSelected, isPOIInteraction, setIsPOIInteraction }) {  // Add weatherData and onCoordinatesSelected to props
@@ -16,8 +17,19 @@ function Mapview({ results, pieChartData, colors, weatherData, onCoordinatesSele
   const [searchQuery, setSearchQuery] = useState('');
   const [pinLocation, setPinLocation] = useState(null);
   const [circleRadius, setCircleRadius] = useState(5); // 5km radius
+  const [isLoading, setIsLoading] = useState(false); // Loading state for analysis
   const pinMarkerRef = useRef(null);
   const circleLayerRef = useRef(null);
+
+  // Effect to hide loading overlay when results are received
+  useEffect(() => {
+    if (results && isLoading) {
+      // Add a small delay before hiding the loading overlay to ensure all data is rendered
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 500);
+    }
+  }, [results]);
 
   useEffect(() => {
     // Define updateMap function first before using it
@@ -613,6 +625,13 @@ function Mapview({ results, pieChartData, colors, weatherData, onCoordinatesSele
         
         // Simulate a click at this location to place a pin
         handleMapClick({ lngLat: { lng, lat } });
+        
+        // Explicitly set coordinates in the parent component
+        if (onCoordinatesSelected) {
+          onCoordinatesSelected(lng, lat);
+          // Update local state as well
+          setPinLocation({ lng, lat });
+        }
       }
     } catch (error) {
       console.error('Search error:', error);
@@ -622,20 +641,39 @@ function Mapview({ results, pieChartData, colors, weatherData, onCoordinatesSele
   // Function to handle analyze button click
   const handleAnalyze = () => {
     if (pinLocation && onCoordinatesSelected) {
+      // Show loading overlay
+      setIsLoading(true);
+      
       // Call the parent component's handler with coordinates
       onCoordinatesSelected(pinLocation.lng, pinLocation.lat);
       
       // Trigger the parent's handleSearch function
+      console.log('Analyze button clicked, calling window.handleSearch()');
       if (window.handleSearch) {
+        console.log('window.handleSearch exists, calling it now');
         window.handleSearch();
+        
+        // Set up a timeout to hide the loading overlay if it takes too long
+        // This is a fallback in case the results don't trigger the useEffect
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 15000); // 15 seconds timeout
+      } else {
+        console.error('window.handleSearch is not defined');
+        setIsLoading(false); // Hide loading if there's an error
       }
       // We also keep the pinLocation state so it's available if there's an error
       // and the user needs to try again
+    } else {
+      console.error('Cannot analyze: pinLocation or onCoordinatesSelected is missing', { pinLocation, hasHandler: !!onCoordinatesSelected });
     }
   };
   
   return (
     <div className="map-container">
+      {/* Loading Overlay */}
+      <LoadingOverlay isVisible={isLoading} />
+      
       {/* Search bar and analyze button */}
       <div className="map-controls">
         <div className="search-container">
@@ -655,8 +693,10 @@ function Mapview({ results, pieChartData, colors, weatherData, onCoordinatesSele
             <button 
               className="analyze-button" 
               onClick={handleAnalyze}
+              disabled={isLoading}
+              aria-label="Analyze Area"
             >
-              Analyze Area
+              <FaMapMarkerAlt /> {isLoading ? 'Analyzing...' : 'Analyze Area'}
             </button>
           )}
         </div>

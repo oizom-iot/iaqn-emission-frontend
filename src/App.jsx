@@ -3,6 +3,8 @@ import axios from 'axios';
 import Mapview from './components/Mapview';
 import './App.css';
 import ScrollableCards from './components/ScrollableCards';
+import InstructionContainer from './components/InstructionContainer';
+import LoadingOverlay from './components/LoadingOverlay';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#AF19FF', '#FF1919'];
 
@@ -14,7 +16,8 @@ function App() {
   const [error, setError] = useState(null);
   const [analysis, setAnalysis] = useState(null);
   const [showAnalysis, setShowAnalysis] = useState(false);
-  const [isPOIInteraction, setIsPOIInteraction] = useState(false);  // Add this line
+  const [isPOIInteraction, setIsPOIInteraction] = useState(false);
+  const [showInstructions, setShowInstructions] = useState(true);  // Control instruction container visibility
   
   // Colors for the pie chart
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#AF19FF', '#FF1919'];
@@ -29,6 +32,8 @@ function App() {
     
     setLoading(true);
     setError(null);
+    // Only hide instructions when Analyze Area button is clicked, which calls this function
+    setShowInstructions(false);
     try {
       const response = await axios.post(`${API_URL}/analyze-area`, {
         longitude: coordinates.lng,
@@ -62,11 +67,18 @@ function App() {
     setAnalysis(null);
     setShowAnalysis(false);
     setError(null);
+    setShowInstructions(true); // Show instructions when starting a new analysis
   };
   
   // Function to handle coordinates selected from map
   const handleCoordinatesSelected = (lng, lat) => {
     setCoordinates({ lng, lat });
+    // Don't hide instructions when user drops a pin - only hide when Analyze Area is clicked
+  };
+  
+  // Function to handle closing the instruction container
+  const handleCloseInstructions = () => {
+    setShowInstructions(false);
   };
 
   // Remove the local calculateScore function since we'll get the score from the LLM
@@ -86,13 +98,13 @@ function App() {
               isPOIInteraction={isPOIInteraction}
               setIsPOIInteraction={setIsPOIInteraction}
             />
+            {showInstructions && (
+              <div className="instruction-wrapper">
+                <InstructionContainer onClose={handleCloseInstructions} />
+              </div>
+            )}
           </div>
-          {loading && (
-            <div className="loading-overlay">
-              <div className="loading-spinner"></div>
-              <div className="loading-message">Analyzing area...</div>
-            </div>
-          )}
+          {loading && <LoadingOverlay isVisible={loading} />}
         </>
       ) : (
         <>

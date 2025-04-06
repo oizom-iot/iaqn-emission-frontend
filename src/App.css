@@ -26,6 +26,14 @@
   pointer-events: auto;
 }
 
+.instruction-wrapper {
+  position: absolute;
+  top: 90px; /* Position below the search bar */
+  left: 20px;
+  z-index: 10;
+  pointer-events: auto;
+}
+
 .app-title {
   margin-bottom: 2rem;
 }

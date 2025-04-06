@@ -84,21 +84,24 @@
   border-radius: 8px;
   padding: 10px 15px; /* Reduced padding for better vertical alignment */
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
+  margin-top: 2px;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  margin-top: 0; /* Remove any top margin */
+  z-index: 1000; /* Ensure button is clickable */
+  position: relative; /* Ensure z-index works properly */
 }
 
 .analyze-button:hover {
   background: linear-gradient(135deg, #0066cc, #27ae60);
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(0, 122, 255, 0.3);
+  opacity: 1;
 }
 
 .analyze-button:active {

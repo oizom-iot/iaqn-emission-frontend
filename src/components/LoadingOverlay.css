@@ -4,32 +4,133 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.85);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  backdrop-filter: blur(5px);
 }
 
-.loading-spinner {
-  width: 60px;
-  height: 60px;
-  border: 5px solid rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  border-top-color: #3498db;
-  animation: spin 1s ease-in-out infinite;
-  margin-bottom: 20px;
+.loading-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 500px;
+  padding: 30px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
+/* Removed spinner as requested */
+
+@keyframes steam {
+  0% { opacity: 0; transform: translateY(0) scale(1); }
+  50% { opacity: 0.7; transform: translateY(-15px) scale(1.2); }
+  100% { opacity: 0; transform: translateY(-30px) scale(1.5); }
+}
+
+.loading-message-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
 .loading-message {
   color: white;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   text-align: center;
-  max-width: 80%;
+  max-width: 90%;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  margin-bottom: 20px;
+  font-weight: 500;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  letter-spacing: 0.5px;
+}
+
+.cooking-message {
+  position: relative;
+  padding: 0 15px;
+}
+
+.loading-message.message-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.loading-progress {
+  width: 100%;
+  height: 6px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.loading-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #ff9500, #34c759);
+  border-radius: 3px;
+  transition: width 0.5s ease-in-out;
+  box-shadow: 0 0 10px rgba(255, 149, 0, 0.7);
+}
+
+/* Add cooking-themed decorations and animations */
+.cooking-message::before,
+.cooking-message::after {
+  content: '';
+  position: absolute;
+  opacity: 0;
+  animation: steam 2s infinite ease-out;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  width: 8px;
+  height: 8px;
+  pointer-events: none;
+}
+
+.cooking-message::before {
+  top: -5px;
+  left: 30%;
+  animation-delay: 0.3s;
+}
+
+.cooking-message::after {
+  top: -5px;
+  right: 30%;
+  animation-delay: 1s;
+}
+
+/* Add a subtle background pattern to simulate a cooking surface */
+.loading-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.3) 100%);
+  opacity: 0.5;
+  width: 20px;
+  height: 20px;
+  background-color: rgba(52, 199, 89, 0.7);
+  border-radius: 50%;
+  top: -10px;
+  left: 50%;
+  margin-left: -10px;
+  animation: bubble 2s infinite;
+  box-shadow: 0 0 10px rgba(52, 199, 89, 0.5);
 }
